@@ -38,7 +38,7 @@ class Task:
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-        # Create task_config with everything that is inside _config and whatever the user chooses to 
+        # Create task_config with everything that is inside _config and whatever the user chooses to
         # extend it with when initializing a child subclass of Task. Only task_config should be referenced
         # in any application, not _config.
         self.task_config = self._config.copy
