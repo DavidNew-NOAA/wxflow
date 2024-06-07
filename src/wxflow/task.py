@@ -43,15 +43,6 @@ class Task:
         # in any application, not _config.
         self.task_config = self._config.copy
 
-        # Pull out basic runtime keys values from config into its own runti
-        runtime_keys = ['PDY', 'cyc', 'DATA', 'RUN', 'CDUMP']  # TODO: eliminate CDUMP and use RUN instead
-        for kk in runtime_keys:
-            try:
-                logger.debug(f'Deleting runtime_key {kk} from config')
-                del self._config[kk]
-            except KeyError:
-                raise KeyError(f"Encountered an unreferenced runtime_key {kk} in 'config'")
-
         # Any other composite runtime variables that may be needed for the duration of the task
         # can be constructed here
 
