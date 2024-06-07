@@ -47,7 +47,7 @@ class Task:
         # can be constructed here
 
         # Construct the current cycle datetime object
-        self.task_config['current_cycle'] = add_to_datetime(self.task_config['PDY'], to_timedelta(f"{self.task_config.cyc}H"))
+        self.task_config['current_cycle'] = add_to_datetime(self._config['PDY'], to_timedelta(f"{self._config.cyc}H"))
         logger.debug(f"current cycle: {self.task_config['current_cycle']}")
 
         # Construct the previous cycle datetime object
