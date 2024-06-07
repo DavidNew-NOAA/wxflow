@@ -60,7 +60,7 @@ class Task:
         self._runtime_config['previous_cycle'] = add_to_datetime(self._runtime_config.current_cycle, -to_timedelta(f"{self._config['assim_freq']}H"))
         logger.debug(f"previous cycle: {self._runtime_config['previous_cycle']}")
 
-        # Create task_config which combines the contents of config and runtime_config. 
+        # Create task_config which combines the contents of config and runtime_config.
         # Only task_config should be accessed from this point on.
         self.task_config = AttrDict(**self._config, **self._runtime_config)
 
