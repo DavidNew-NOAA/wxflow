@@ -62,7 +62,7 @@ class Task:
 
         # Create task_config which combines the contents of config and runtime_config. 
         # Only task_config should be accessed from this point on.
-        self.task_config = AttrDict(**self._config, **self._runtime_config
+        self.task_config = AttrDict(**self._config, **self._runtime_config)
 
         pass
 
