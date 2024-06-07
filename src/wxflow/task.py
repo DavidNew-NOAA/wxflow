@@ -30,7 +30,7 @@ class Task:
         """
 
         # Store the config and arguments as attributes of the object
-        self.config = AttrDict(config)
+        self._config = AttrDict(config)
 
         for arg in args:
             setattr(self, str(arg), arg)
@@ -39,13 +39,13 @@ class Task:
             setattr(self, key, value)
 
         # Pull out basic runtime keys values from config into its own runtime config
-        self.runtime_config = AttrDict()
+        self._runtime_config = AttrDict()
         runtime_keys = ['PDY', 'cyc', 'DATA', 'RUN', 'CDUMP']  # TODO: eliminate CDUMP and use RUN instead
         for kk in runtime_keys:
             try:
-                self.runtime_config[kk] = config[kk]
+                self._runtime_config[kk] = config[kk]
                 logger.debug(f'Deleting runtime_key {kk} from config')
-                del self.config[kk]
+                del self._config[kk]
             except KeyError:
                 raise KeyError(f"Encountered an unreferenced runtime_key {kk} in 'config'")
 
@@ -53,12 +53,16 @@ class Task:
         # can be constructed here
 
         # Construct the current cycle datetime object
-        self.runtime_config['current_cycle'] = add_to_datetime(self.runtime_config['PDY'], to_timedelta(f"{self.runtime_config.cyc}H"))
-        logger.debug(f"current cycle: {self.runtime_config['current_cycle']}")
+        self._runtime_config['current_cycle'] = add_to_datetime(self._runtime_config['PDY'], to_timedelta(f"{self._runtime_config.cyc}H"))
+        logger.debug(f"current cycle: {self._runtime_config['current_cycle']}")
 
         # Construct the previous cycle datetime object
-        self.runtime_config['previous_cycle'] = add_to_datetime(self.runtime_config.current_cycle, -to_timedelta(f"{self.config['assim_freq']}H"))
-        logger.debug(f"previous cycle: {self.runtime_config['previous_cycle']}")
+        self._runtime_config['previous_cycle'] = add_to_datetime(self._runtime_config.current_cycle, -to_timedelta(f"{self._config['assim_freq']}H"))
+        logger.debug(f"previous cycle: {self._runtime_config['previous_cycle']}")
+
+        # Create task_config which combines the contents of config and runtime_config. 
+        # Only task_config should be accessed from this point on.
+        self.task_config = AttrDict(**self._config, **self._runtime_config
 
         pass
 
