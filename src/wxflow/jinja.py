@@ -8,6 +8,7 @@ from markupsafe import Markup
 
 from .timetools import (add_to_datetime, strftime, to_fv3time, to_isotime,
                         to_julian, to_timedelta, to_YMD, to_YMDH)
+from .template import (replace_tmpl)
 
 __all__ = ['Jinja']
 
@@ -146,7 +147,8 @@ class Jinja:
                 if not (isinstance(dt, SilentUndefined) or isinstance(delta, SilentUndefined))
                 else dt if isinstance(dt, SilentUndefined) else delta)
         env.filters["to_timedelta"] = lambda delta_str: to_timedelta(delta_str) if not isinstance(delta_str, SilentUndefined) else delta_str
-
+        env.filters["replace_tmpl"] = lambda string, tmpl_dict: replace_tmpl(string, tmpl_dict)
+        
         # Add any additional filters
         if filters is not None:
             for filter_name, filter_func in filters.items():

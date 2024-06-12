@@ -189,3 +189,12 @@ def is_single_type_or_string(s):
         return True
     else:
         return False
+
+def replace_tmpl(string, tmpl_dict):
+    """
+        Replace substrings of input string using  input dictionary.
+    """
+
+    for key in tmpl_dict:
+        string = string.replace(key, tmpl_dict[key])
+    return string
