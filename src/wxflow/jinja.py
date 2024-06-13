@@ -6,9 +6,9 @@ from typing import Dict, List, Union
 import jinja2
 from markupsafe import Markup
 
+from .template import (replace_tmpl)
 from .timetools import (add_to_datetime, strftime, to_fv3time, to_isotime,
                         to_julian, to_timedelta, to_YMD, to_YMDH)
-from .template import (replace_tmpl)
 
 __all__ = ['Jinja']
 
@@ -148,7 +148,7 @@ class Jinja:
                 else dt if isinstance(dt, SilentUndefined) else delta)
         env.filters["to_timedelta"] = lambda delta_str: to_timedelta(delta_str) if not isinstance(delta_str, SilentUndefined) else delta_str
         env.filters["replace_tmpl"] = lambda string, tmpl_dict: replace_tmpl(string, tmpl_dict)
-        
+
         # Add any additional filters
         if filters is not None:
             for filter_name, filter_func in filters.items():
