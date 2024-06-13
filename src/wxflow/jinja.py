@@ -6,7 +6,7 @@ from typing import Dict, List, Union
 import jinja2
 from markupsafe import Markup
 
-from .template import (replace_tmpl)
+from .template import replace_tmpl
 from .timetools import (add_to_datetime, strftime, to_fv3time, to_isotime,
                         to_julian, to_timedelta, to_YMD, to_YMDH)
 
