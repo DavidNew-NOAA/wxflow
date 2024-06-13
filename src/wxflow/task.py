@@ -41,7 +41,7 @@ class Task:
         # Create task_config with everything that is inside _config and whatever the user chooses to
         # extend it with when initializing a child subclass of Task. Only task_config should be referenced
         # in any application, not _config.
-        self.task_config = self._config.copy()
+        self.task_config = self._config.deepcopy()
 
         # Any other composite runtime variables that may be needed for the duration of the task
         # can be constructed here
