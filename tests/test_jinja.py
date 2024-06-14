@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import jinja2
 import pytest
 
 from wxflow import Jinja, to_isotime
@@ -29,6 +30,10 @@ def test_render_stream():
     j = Jinja(j2tmpl, data, allow_missing=False)
     assert j.render == f"Hello Jane! How are you? It is: {to_isotime(current_date)}"
 
+    tmpl_dict = {"{{ name }}": "Jane", "{{ greeting }}": "How are you?", "{{ current_date | to_isotime }}": to_isotime(current_date)}
+    env = Jinja.get_set_env(jinja2.BaseLoader())
+    assert env.filters['replace_tmpl'](j2tmpl, tmpl_dict) == f"Hello Jane! How are you? It is: {to_isotime(current_date)}"
+                            
 
 def test_render_file(tmp_path, create_template):
 

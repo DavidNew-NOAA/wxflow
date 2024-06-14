@@ -5,8 +5,8 @@ from typing import Dict, List, Union
 
 import jinja2
 from markupsafe import Markup
+from functools import reduce
 
-from .template import replace_tmpl
 from .timetools import (add_to_datetime, strftime, to_fv3time, to_isotime,
                         to_julian, to_timedelta, to_YMD, to_YMDH)
 
@@ -147,7 +147,7 @@ class Jinja:
                 if not (isinstance(dt, SilentUndefined) or isinstance(delta, SilentUndefined))
                 else dt if isinstance(dt, SilentUndefined) else delta)
         env.filters["to_timedelta"] = lambda delta_str: to_timedelta(delta_str) if not isinstance(delta_str, SilentUndefined) else delta_str
-        env.filters["replace_tmpl"] = lambda string, tmpl_dict: replace_tmpl(string, tmpl_dict)
+        env.filters["replace_tmpl"] = lambda string, tmpl_dict: reduce(lambda ss, kk: ss.replace(kk, tmpl_dict[kk]), tmpl_dict, string)
 
         # Add any additional filters
         if filters is not None:
