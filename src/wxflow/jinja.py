@@ -111,6 +111,7 @@ class Jinja:
         getenv: read variable from environment if defined, else UNDEFINED
         to_timedelta: convert a string to a timedelta object
         add_to_datetime: add time to a datetime, return new datetime object
+        replace_tmpl: replace substrings of an input string with replacements specified by an input dictionary
 
         The Expression Statement extension "jinja2.ext.do", which enables
             {% do ... %} statements.  These are useful for appending to lists.
